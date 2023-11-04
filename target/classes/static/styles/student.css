@@ -1,0 +1,105 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+html, body {
+    margin:0;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    color: #0f0f0f;
+}
+.form-field-input-input {
+    padding-left: 20px;
+    color: #333333;
+    border-radius: 4px;
+    border-style:none;
+}
+table {
+    font-weight: bold;
+    text-align: center;
+    border: none;
+}
+.groupTable {
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top:20px;
+}
+th {
+    padding: 10px 10px;
+    background: linear-gradient(to bottom, #77aae0, #356394);
+    color: #0f0f0f;
+    font-size: 14px;
+    border-radius: 10px;
+}
+td {
+    border-radius: 8px;
+    vertical-align: middle;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+    color: #0f0f0f;
+    border-color: #0f0f0f;
+}
+h4 {
+    margin-left: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.header {
+    list-style-type: none;
+    padding: 0;
+    top: 0;
+    overflow: hidden;
+    background-color: #737373;
+}
+.form-btn {
+
+    position:relative;
+    bottom:-14px;
+    margin-left: 30px;
+
+    background: #77aae0;
+    border-radius: 8px;
+
+    font-family: 'Montserrat';
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 14px;
+    color: #0f0f0f;
+
+    border: none;
+    outline: none;
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+}
+.form-btn:hover {
+    background: #356394;/* Цвет ссылки при наведении */
+}
+li {
+    display: inline;
+    float: left;
+}
+li:last-child {
+    border-right: none;
+    font-size: 12px;
+}
+li a {
+    display: block;
+    color: #333333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-radius: 4px;
+    border-color:#0f0f0f;
+    font-weight: bold;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #002d5c;
+}

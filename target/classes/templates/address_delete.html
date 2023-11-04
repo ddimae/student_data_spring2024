@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Адреса - вилучення</title>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link th:href="@{/styles/address_delete.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:if="${#strings.length(message ?: '') > 0}" class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <h4 style="color:red"><b th:text="${error}"></b></h4>
+</div>
+
+<div class="header">
+  <h4>Вилучення адреси</h4>
+</div>
+
+<div th:if="${addr.id == 0}">
+  <p style="color:blue">Record for deleting not found!</p>
+  <input class="form-btn" type="hidden" name="id_owner" th:value="${owner.id}" required/>
+  <a class="form-btn" th:href="@{'addresses?id_owner=' + ${owner.id}}">Назад</a>
+</div>
+
+<div th:if="${addr.id > 0}">
+  <form style="alignment: center" action="delete_address" method="post" class="groupTable">
+    <table border="2">
+      <tr>
+        <th class="form-field-label">Адреса:</th>
+        <td>
+          <span th:text="${addr.toString()}"></span>
+        </td>
+      </tr>
+    </table>
+
+    <h4>Ви підтверджуєте видалення контакту?</h4>
+
+    <input type="hidden" name="id_address" th:value="${addr.id}" required/>
+    <input type="hidden" name="id_owner" th:value="${owner.id}" required/>
+    <input class="form-btn" type="submit" value="Видалити"/>
+    <a class="form-btn" th:href="@{'addresses?id_owner=' + ${owner.id}}">Назад</a>
+  </form>
+</div>
+</body>
+</html>

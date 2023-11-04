@@ -1,0 +1,30 @@
+html, body {
+    margin:0;
+    height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    background-color: white;
+}
+button {
+    margin-top:100px;
+    margin-left:auto;
+    margin-right:auto;
+    display: block;
+    background: #77aae0;
+    border-radius: 12px;
+    font-family: 'Montserrat';
+    font-size: 16px;
+    line-height: 24px;
+    color: #0f0f0f;
+    border: none;
+    outline: none;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    width:100px;
+}
+button:hover {
+    background: #356394;/* Цвет ссылки при наведении */
+}

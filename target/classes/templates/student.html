@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>New Student</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link th:href="@{/styles/student.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div class="header">
+  <li><h4>Edit student</h4></li>
+  <li><p style="color:red" th:text="${error}"></p></li>
+</div>
+
+<form th:action="${id==0} ? 'add_student' : 'edit_student'" method="post" class="groupTable">
+
+  <input type="hidden" name="id" th:value="${student.id}" required>
+  <input type="hidden" name="id_group" th:value="${student.academicGroup.id}" required>
+  <table border="2" id="students_table">
+    <tr>
+      <th>Прізвище</th>
+      <td th:text="${student.lastName}"></td>
+    </tr>
+    <tr>
+      <th>Ім`я</th>
+      <td th:text="${student.firstName}"></td>
+    </tr>
+    <tr>
+      <th>По-батькові</th>
+      <td th:text="${student.middleName}"></td>
+    </tr>
+    <tr>
+      <th for="dateOfBirth">День народження</th>
+      <td>
+        <input class="form-field-input-input"
+               type="date"
+               name="dateOfBirth"
+               id="dateOfBirth"
+               th:value="${student.dateOfBirth != null ? student.dateOfBirth : ''}">
+      </td>
+    </tr>
+    <tr>
+      <th for="contract">Форма навчання</th>
+      <td>
+        <select class="form-field-input-input" id="contract" name="contract" th:field="${student.contract}">
+          <option value="true" th:selected="${student.contract}">Контракт</option>
+          <option value="false" th:selected="${!student.contract}">Бюджет</option>
+        </select>
+      </td>
+    </tr>
+
+    <tr>
+      <th for="takeScholarship">Отримання стипендії</th>
+      <td>
+        <select class="form-field-input-input" id="takeScholarship" name="takeScholarship" th:field="${student.takeScholarship}">
+          <option value="true" th:selected="${student.takeScholarship}">Так</option>
+          <option value="false" th:selected="${!student.takeScholarship}">Ні</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+
+  <li><input class="form-btn" type="submit" value="Зберегти"></li>
+  <button class="form-btn" onclick="javascript:window.history.back(-1);return false;">Назад</button>
+</form>
+
+</body>
+</html>

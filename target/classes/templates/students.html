@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Студенти</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link th:href="@{/styles/students.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="header">
+    <li><h4>Група <span th:text="${groupInDb.getGroupName()}"></span></h4></li>
+    <li>
+        <input class="header-search"
+               type="text"
+               placeholder="Пошук за прізвищем"
+               id="search-text"
+               onkeyup="tableSearch()">
+    </li>
+    <li>
+        <a class="form-btn" th:href="@{/groups}">Назад</a>
+    </li>
+</div>
+
+<div class="groupTable">
+    <table border="2" id="students_table">
+        <tr>
+            <th>Прізвище</th>
+            <th>Імя</th>
+            <th>По-батькові</th>
+            <th>Дата народження</th>
+            <th>Бюджет/Контракт</th>
+            <th>Стипендія</th>
+            <th colspan="5">Відомості про студента</th>
+        </tr>
+        <tr th:each="stud : ${students}">
+            <td th:text="${stud.lastName}"></td>
+            <td th:text="${stud.firstName}"></td>
+            <td th:text="${stud.middleName}"></td>
+            <td th:text="${stud.dateOfBirth}"></td>
+            <td>
+                <span th:if="${stud.contract == false}">Бюджет</span>
+                <span th:if="${stud.contract == true}">Контракт</span>
+            </td>
+            <td>
+                <span th:if="${stud.takeScholarship == true}">ТАК</span>
+                <span th:if="${stud.takeScholarship == false}">-</span>
+            </td>
+            <td>
+                <form th:action="@{/edit_student}" method="get">
+                    <input type="hidden" name="id" th:value="${stud.id}">
+                    <input class="buttonfortable" type="submit" value="Змінити">
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/phones}" method="get">
+                    <input type="hidden" name="id_owner" th:value="${stud.id}">
+                    <input class="buttonfortable" type="submit" value="Телефони">
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/emails}" method="get">
+                    <input type="hidden" name="id_owner" th:value="${stud.id}">
+                    <input class="buttonfortable" type="submit" value="Пошта">
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/addresses}" method="get">
+                    <input type="hidden" name="id_owner" th:value="${stud.id}">
+                    <input class="buttonfortable" type="submit" value="Адреси">
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    // For confirm deleting
+    function confirmation() {
+        return confirm('Are you sure you want to do this?');
+    }
+
+    // For filtering
+    function tableSearch() {
+        var phrase = document.getElementById('search-text');
+        var table = document.getElementById('students_table');
+        var regPhrase = new RegExp(phrase.value, 'i');
+        var flag = false;
+        for (var i = 1; i < table.rows.length; i++) {
+            //!!!
+            //flag = false;
+            //for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+            flag = regPhrase.test(table.rows[i].cells[0].innerHTML); //cells[j]
+            //if (flag) break;
+            //}
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+
+        }
+    }
+
+    // For sorting
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("students_table");
+        switching = true;
+        //Сделайте цикл, которая будет продолжаться до тех пор, пока
+        //никакого переключения не было сделано:
+        while (switching) {
+            //начните с того, что скажите: никакого переключения не происходит:
+            switching = false;
+            rows = table.rows;
+            //Цикл через все строки таблицы (за исключением
+            //во-первых, который содержит заголовки таблиц):
+            for (i = 1; i < (rows.length - 1); i++) {
+                //начните с того, что не должно быть никакого переключения:
+                shouldSwitch = false;
+                //Получите два элемента, которые вы хотите сравнить,
+                //один из текущей строки и один из следующей:
+                //Сортируем по полю нуль = имя
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+                //проверьте, должны ли две строки поменяться местами:
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    //если это так, отметьте как переключатель и разорвите петлю:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /*Если переключатель был отмечен, сделайте переключатель
+                и отметьте, что переключение было сделано:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+</body>
+</html>

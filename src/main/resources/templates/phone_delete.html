@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Телефон - вилучення</title>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link th:href="@{/styles/phone_delete.css}" rel="stylesheet">
+</head>
+<body>
+
+
+<div th:if="${error ne null and error.length() > 0}" class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <h4 style="color:red"><b th:text="${error}"></b></h4>
+</div>
+
+<div class="header">
+  <h4>Вилучення номеру телефону</h4>
+</div>
+
+<div th:if="${phone.id == 0}">
+  <p style="color:blue">Record for deleting not found!</p>
+  <input type="hidden" name="id_owner" th:value="${owner}" required>
+  <a class="form-btn" th:href="@{'phones?id_owner=' + ${owner}}">Назад</a>
+</div>
+
+<div th:if="${phone.id > 0}">
+  <form style="alignment: center" action="delete_phone" method="post" class="groupTable">
+    <table border="2">
+      <tr>
+        <th class="form-field-label">Телефон:</th>
+        <td>
+          <span th:text="${phone.toString()}"></span>
+        </td>
+      </tr>
+    </table>
+
+    <h4>Ви підтверджуєте видалення контакту?</h4>
+
+    <input type="hidden" name="id_phone" th:value="${phone.id}" required>
+    <input type="hidden" name="id_owner" th:value="${owner}" required>
+    <input class="form-btn" type="submit" value="Видалити">
+    <a class="form-btn" th:href="@{'phones?id_owner=' + ${owner}}">Назад</a>
+  </form>
+</div>
+</body>
+</html>

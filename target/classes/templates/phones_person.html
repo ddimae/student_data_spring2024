@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Телефони</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link th:href="@{/styles/phones_person.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+
+<div th:if="${#strings.length(message) > 0}" class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <br>
+    <h4 style="color:red" th:text="${message}"></h4>
+    <br>
+</div>
+
+<div class="header">
+    <li><h4 th:text="'Власник: ' + ${owner.initialsToString()}"></h4></li>
+    <li>
+        <form action="add_phone">
+            <input type="hidden" name="id_owner" th:value="${owner.id}">
+            <input class="buttonforheader" type="submit" value="Додати телефон">
+        </form>
+    </li>
+    <li><a class="form-btn" th:href="${ref_to_return}">Назад</a></li>
+</div>
+
+<div class="groupTable">
+    <table border="2" id="phones_table">
+        <thead>
+        <tr>
+            <th>Номер телефону</th>
+            <th>Актуальний</th>
+            <th>Основний</th>
+            <th colspan="2">Змінити статус</th>
+            <th>Вилучити</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="phone : ${phones}">
+            <td th:text="${phone.phoneNumber}"></td>
+            <td>
+                <span th:if="${phone.active}">Активний</span>
+                <span th:unless="${phone.active}">Неактивний</span>
+            </td>
+            <td>
+                <span th:if="${phone.prior}">Основний</span>
+                <span th:unless="${phone.prior}">Додатковий</span>
+            </td>
+            <td>
+                <form action="phone_active">
+                    <input type="hidden" name="id_phone" th:value="${phone.id}">
+                    <input type="hidden" name="id_owner" th:value="${owner.id}">
+                    <input class="buttonfortable" type="submit"
+                           th:value="${phone.active ? 'Неактивний' : 'Активний'}">
+                </form>
+            </td>
+            <td>
+                <form action="phone_prior">
+                    <input type="hidden" name="id_phone" th:value="${phone.id}">
+                    <input type="hidden" name="id_owner" th:value="${owner.id}">
+                    <input class="buttonfortable" type="submit"
+                           th:value="${phone.prior ? 'Додатковий' : 'Основний'}">
+                </form>
+            </td>
+            <td>
+                <form action="delete_phone" onsubmit="return confirmation()">
+                    <input type="hidden" name="id_phone" th:value="${phone.id}">
+                    <input type="hidden" name="id_owner" th:value="${owner.id}">
+                    <input class="buttonfortable" type="submit" value="Вилучити">
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    // For sorting
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("phones_table");
+        switching = true;
+        while (switching) {
+            switching = false;
+            rows = table.rows;
+            for (i = 1; i < (rows.length - 1); i++) {
+                shouldSwitch = false;
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+</script>
+</body>
+</html>

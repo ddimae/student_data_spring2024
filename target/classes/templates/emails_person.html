@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Emails</title>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/emails_person.css}" />
+</head>
+<body>
+<div th:if="${#strings.length(message) > 0}" class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    <br>
+    <h4 style="color:red"><b th:text="${message}"></b></h4>
+    <br>
+</div>
+
+<div class="header">
+    <li><h4>Власник: <span th:text="${owner.initialsToString()}"></span></h4></li>
+    <li>
+        <form th:action="@{/add_email}" method="get">
+            <input type="hidden" name="id_owner" th:value="${owner.id}" />
+            <input class="buttonforheader" type="submit" value="Додати email" />
+        </form>
+    </li>
+    <li><a class="form-btn" th:href="${ref_to_return}">Назад</a></li>
+</div>
+
+<div class="groupTable">
+    <table border="2" id="emails_table">
+        <tr>
+            <th>Email</th>
+            <th>Актуальний</th>
+            <th>Основний</th>
+            <th colspan="2">Змінити статус</th>
+            <th>Вилучити</th>
+        </tr>
+        <tr th:each="email : ${emails}">
+            <td th:text="${email.email}"></td>
+            <td>
+                <span th:if="${email.active == true}">Активний</span>
+                <span th:if="${email.active == false}">Неактивний</span>
+            </td>
+            <td>
+                <span th:if="${email.prior == true}">Основний</span>
+                <span th:if="${email.prior == false}">Додатковий</span>
+            </td>
+            <td>
+                <form th:action="@{/email_active}" method="post">
+                    <input type="hidden" name="id_email" th:value="${email.id}" />
+                    <input type="hidden" name="id_owner" th:value="${owner.id}" />
+                    <input class="buttonfortable" type="submit" th:value="${email.active == false ? 'Активний' : 'Неактивний'}" />
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/email_prior}" method="post">
+                    <input type="hidden" name="id_email" th:value="${email.id}" />
+                    <input type="hidden" name="id_owner" th:value="${owner.id}" />
+                    <input class="buttonfortable" type="submit" th:value="${email.prior == false ? 'Основний' : 'Додатковий'}" />
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/delete_email}" method="post" onsubmit="return confirmation()">
+                    <input type="hidden" name="id_email" th:value="${email.id}" />
+                    <input type="hidden" name="id_owner" th:value="${owner.id}" />
+                    <input class="buttonfortable" type="submit" value="Вилучити" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+    // For confirm deleting
+    function confirmation() {
+        return confirm('Email буде вилучено. Продовжити?');
+    }
+
+    // For sorting
+    function sortTable() {
+        var table, rows, switching, i, x, y, shouldSwitch;
+        table = document.getElementById("emails_table");
+        switching = true;
+        //Сделайте цикл, которая будет продолжаться до тех пор, пока
+        //никакого переключения не было сделано:
+        while (switching) {
+            //начните с того, что скажите: никакого переключения не происходит:
+            switching = false;
+            rows = table.rows;
+            //Цикл через все строки таблицы (за исключением
+            //во-первых, который содержит заголовки таблиц):
+            for (i = 1; i < (rows.length - 1); i++) {
+                //начните с того, что не должно быть никакого переключения:
+                shouldSwitch = false;
+                //Получите два элемента, которые вы хотите сравнить,
+                //один из текущей строки и один из следующей:
+                //Сортируем по полю нуль = имя
+                x = rows[i].getElementsByTagName("TD")[0];
+                y = rows[i + 1].getElementsByTagName("TD")[0];
+                //проверьте, должны ли две строки поменяться местами:
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    //если это так, отметьте как переключатель и разорвите петлю:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+            if (shouldSwitch) {
+                /*Если переключатель был отмечен, сделайте переключатель
+                и отметьте, что переключение было сделано:*/
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            }
+        }
+    }
+    /*]]>*/
+</script>
+</body>
+</html>

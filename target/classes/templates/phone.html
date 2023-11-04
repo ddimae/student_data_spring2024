@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Телефон</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link th:href="@{/styles/phone.css}" rel="stylesheet">
+</head>
+<body>
+<div th:if="${#strings.length(error) > 0}" class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <h4 style="color:red"><b th:text="${error}"></b></h4>
+</div>
+
+<div class="header">
+  <li><h4>Редагування номеру телефону</h4></li>
+</div>
+
+<form th:action="@{/add_phone}" method="post" class="groupTable">
+  <input type="hidden" name="id_phone" th:value="${phone.id}" required>
+  <input type="hidden" name="id_owner" th:value="${owner.id}" required>
+
+  <table border="2">
+    <tr>
+      <th for="phone_number" class="form-field-label">Номер телефону</th>
+      <td>
+        <input name="phone_number"
+               th:value="${phone.phoneNumber}"
+               class="form-field-input-input"
+               id="phone_number"
+               required
+               type="tel"
+               placeholder="Введіть номер телефону"
+               pattern="[0-9]{12}"
+               size="12"
+               title="12 цифр без '+'">
+      </td>
+    </tr>
+    <tr>
+      <th for="is_active" class="form-field-label">Чи доступний?</th>
+      <td>
+        <select class="form-field-input-input" id="is_active" name="active" required>
+          <option th:selected="${phone.active}">Активний</option>
+          <option th:selected="${!phone.active}">Неактивний</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th for="is_prior" class="form-field-label">Є основним?</th>
+      <td>
+        <select class="form-field-input-input" id="is_prior" name="prior" required>
+          <option th:selected="${phone.prior}">Основний</option>
+          <option th:selected="${!phone.prior}">Додатковий</option>
+        </select>
+      </td>
+    </tr>
+  </table>
+
+  <li><input class="form-btn" type="submit" value="Зберегти"></li>
+  <li><a class="form-btn" th:href="@{/phones(id_owner=${owner.id})}">Назад</a></li>
+</form>
+</body>
+</html>

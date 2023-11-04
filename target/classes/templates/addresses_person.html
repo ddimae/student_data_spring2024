@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Addresses</title>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/styles/addresses_person.css}" />
+</head>
+<body>
+<div th:if="${#strings.length(message ?: '') > 0}" class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <br>
+  <h4 style="color:red"><b th:text="${message}"></b></h4>
+  <br>
+</div>
+
+<div class="header">
+  <li>
+    <h4>
+      Власник: <span th:text="${owner.initialsToString()}"></span>
+    </h4>
+  </li>
+  <li>
+    <form action="add_address">
+      <input type="hidden" name="id_owner" th:value="${owner.id}" />
+      <input class="buttonforheader" type="submit" value="Додати адресу">
+    </form>
+  </li>
+  <li>
+    <a class="form-btn" th:href="${ref_to_return}">Назад</a>
+  </li>
+</div>
+
+<div class="groupTable">
+  <table border="2" id="Addresses_table">
+    <thead>
+    <tr>
+      <th>Країна</th>
+      <th>Регіон</th>
+      <th>Micтo</th>
+      <th>Адреса</th>
+      <th>Поточний</th>
+      <th>Змінити статус</th>
+      <th>Вилучити</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="addrEntity : ${addresses}">
+      <td th:text="${addrEntity.key.country}"></td>
+      <td th:text="${addrEntity.key.region}"></td>
+      <td th:text="${addrEntity.key.city}"></td>
+      <td th:text="${addrEntity.key.address}"></td>
+      <td>
+        <span th:if="${addrEntity.value}">Основний</span>
+        <span th:if="${not addrEntity.value}">Додатковий</span>
+      </td>
+      <td>
+        <form action="address_current">
+          <input type="hidden" name="id_address" th:value="${addrEntity.key.id}" />
+          <input type="hidden" name="id_owner" th:value="${owner.id}" />
+          <input class="buttonfortable" type="submit" th:value="${addrEntity.value ? 'Додатковий' : 'Основний'}" />
+        </form>
+      </td>
+      <td>
+        <form action="delete_address" onsubmit="return confirmation()">
+          <input type="hidden" name="id_address" th:value="${addrEntity.key.id}" />
+          <input type="hidden" name="id_owner" th:value="${owner.id}" />
+          <input class="buttonfortable" type="submit" value="Вилучити">
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+  // For confirm deleting
+  function confirmation() {
+    return confirm('Address буде вилучено. Продовжити?');
+  }
+
+  // For sorting
+  function sortTable() {
+    // JavaScript sorting logic
+  }
+</script>
+</body>
+</html>

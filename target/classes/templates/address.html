@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Email</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/styles/address.css}" />
+
+</head>
+
+<body>
+
+<div class="alert" th:if="${#strings.length(error) > 0}">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  <h4 style="color:red"><b th:text="${error}"></b></h4>
+</div>
+
+<div class="header">
+  <li><h4>Адреса</h4></li>
+</div>
+
+<form action="add_address" method="post" class="groupTable">
+  <input type="hidden" name="id_address" th:value="${addr.id}" required>
+  <input type="hidden" name="id_owner" th:value="${owner.id}" required>
+  <table border="2">
+    <tr>
+      <th for="country" class="form-field-label">Країна</th>
+      <td>
+        <input name="country"
+               th:value="${addr.country}"
+               class="form-field-input-input"
+               id="country"
+               required
+               type="text"
+               placeholder="Країна">
+      </td>
+    </tr>
+    <tr>
+      <th for="region" class="form-field-label">Область (регіон)</th>
+      <td>
+        <input name="region"
+               th:value="${addr.region}"
+               class="form-field-input-input"
+               id="region"
+               type="text"
+               placeholder="Область (регіон)">
+      </td>
+    </tr>
+    <tr>
+      <th for="city" class="form-field-label">Населений пункт</th>
+      <td>
+        <input name="city"
+               th:value="${addr.city}"
+               class="form-field-input-input"
+               id="city"
+               type="text"
+               placeholder="Населений пункт">
+      </td>
+    </tr>
+    <tr>
+      <th for="address" class="form-field-label">Адреса</th>
+      <td>
+        <input name="address"
+               th:value="${addr.address}"
+               class="form-field-input-input"
+               id="address"
+               type="text"
+               placeholder="Адреса">
+      </td>
+    </tr>
+  </table>
+  <li><input class="form-btn" type="submit" value="Зберегти"></li>
+  <li><a class="form-btn" th:href="@{/addresses(id_owner=${owner.id})}">Назад</a></li>
+</form>
+</body>
+</html>
