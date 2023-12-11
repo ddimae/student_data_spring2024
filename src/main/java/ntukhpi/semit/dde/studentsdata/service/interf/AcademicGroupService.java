@@ -7,13 +7,15 @@ import java.util.List;
 public interface AcademicGroupService {
     List<AcademicGroup> getAllAcademicGroups();
 
-    AcademicGroup saveAcademicGroup(AcademicGroup academicGroup);
+    boolean saveAcademicGroup(AcademicGroup academicGroup);
 
     AcademicGroup getAcademicGroupById(Long id);
 
-    AcademicGroup updateAcademicGroup(AcademicGroup academicGroup);
+    boolean updateAcademicGroup(AcademicGroup academicGroup);
 
     void deleteAcademicGroupById(Long id);
+
+     AcademicGroup getAcademicGroupByName(String groupName);
 
     // You can add more specific methods as needed for your application
 }

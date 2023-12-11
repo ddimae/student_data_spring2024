@@ -45,7 +45,9 @@ public class EmailServiceImpl implements EmailService {
     public Person getOwnerById(Long id) {
         return emailRepository.findById(id).get().getOwner();
     }
-
+    public Email getEmailByEmail(String emailAddress) {
+        return emailRepository.findByEmail(emailAddress);
+    }
 
     @Override
     public boolean updateEmail(Long id, Email entityToUpdate) {

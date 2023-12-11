@@ -8,6 +8,8 @@ import java.util.List;
 public interface PhoneNumberService {
     List<PhoneNumber> getAllPhoneNumbers();
 
+    List<PhoneNumber> getAllByOwner(Person owner);
+
     PhoneNumber savePhoneNumber(PhoneNumber phoneNumber);
 
     PhoneNumber getPhoneNumberById(Long id);

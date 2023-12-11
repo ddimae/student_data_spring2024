@@ -16,4 +16,5 @@ public interface EmailRepository extends JpaRepository<Email, Long> {
     @Query("SELECT e FROM Email e WHERE e.owner = :owner AND e.prior = true")
     Email findPriorByOwner(@Param("owner") Person owner);
 
+    Email findByEmail(String emailAddress);
 }

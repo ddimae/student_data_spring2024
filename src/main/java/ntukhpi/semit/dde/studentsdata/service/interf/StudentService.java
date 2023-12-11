@@ -7,9 +7,11 @@ import java.util.List;
 public interface StudentService {
     List<Student> getAllStudents();
     List<Student> getAllStudentsByGroupId(Long id);
-    Student saveStudent(Student student);
+    boolean saveStudent(Student student);
 
     Student getStudentById(Long id);
+
+    Student getStudentByName(String firstName, String secondName);
 
     Student updateStudent(Student student);
 

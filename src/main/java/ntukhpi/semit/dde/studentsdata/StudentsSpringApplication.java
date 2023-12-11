@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class StudentsSpringApplication {
-    @Autowired
-    StudentsRepository studentsRepository;
-    @Autowired
-    StudentService studentService;
+    //    @Autowired
+    //    StudentsRepository studentsRepository;
+    //    @Autowired
+    //    StudentService studentService;
     public static void main(String[] args) {
         SpringApplication.run(StudentsSpringApplication.class, args);
     }
@@ -25,7 +25,6 @@ public class StudentsSpringApplication {
         };
     }
     private void testStudents(){
-        studentService = new StudentServiceImpl(studentsRepository);
-        System.out.println(studentService.getAllStudents());
+//        System.out.println(studentService.getAllStudents());
     }
 }

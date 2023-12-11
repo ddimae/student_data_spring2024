@@ -14,11 +14,11 @@
   <li><input class="header-search" type="text" placeholder="Введіть номер групи" id="search-text" onkeyup="tableSearch()"></li>
 
   <form enctype="multipart/form-data"
-        action="${pageContext.request.contextPath}/groups/load_students"
+        action="/groups/load_students"
         method="post"
   >
     <input  type="file" name="file" accept=".xlsx"/>
-    <button  class="button1"> Завантажити дані про групу </button>
+    <button  class="button1" type="submit"> Завантажити дані про групу </button>
   </form>
 </div>
 

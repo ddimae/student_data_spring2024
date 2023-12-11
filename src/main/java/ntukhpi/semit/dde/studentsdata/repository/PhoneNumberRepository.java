@@ -15,4 +15,5 @@ public interface PhoneNumberRepository extends JpaRepository<PhoneNumber, Long> 
     @Query("SELECT p FROM PhoneNumber p WHERE p.owner = :owner AND p.prior = true")
     PhoneNumber findPriorByOwner(@Param("owner") Person owner);
 
+
 }

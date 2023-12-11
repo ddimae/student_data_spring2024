@@ -1,7 +1,6 @@
 package ntukhpi.semit.dde.studentsdata.service.impl;
 
 import jakarta.transaction.Transactional;
-import ntukhpi.semit.dde.studentsdata.entity.Contact;
 import ntukhpi.semit.dde.studentsdata.entity.Person;
 import ntukhpi.semit.dde.studentsdata.entity.PhoneNumber;
 import ntukhpi.semit.dde.studentsdata.repository.PhoneNumberRepository;
@@ -27,6 +26,10 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
         return phoneNumberRepository.findAll();
     }
 
+    @Override
+    public List<PhoneNumber> getAllByOwner(Person owner) {
+        return phoneNumberRepository.findAllByOwner(owner);
+    }
     @Override
     public PhoneNumber savePhoneNumber(PhoneNumber phoneNumber) {
         return phoneNumberRepository.save(phoneNumber);

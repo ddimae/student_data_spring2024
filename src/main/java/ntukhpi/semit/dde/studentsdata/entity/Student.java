@@ -76,6 +76,8 @@ public class Student extends Person {
         parents = new HashMap<>();
     }
 
+
+
     //for parents
     public Map<Parent, KinshipDegree> getParents() {
         return Collections.unmodifiableMap(parents);

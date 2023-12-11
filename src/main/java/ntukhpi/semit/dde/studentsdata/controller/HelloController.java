@@ -29,10 +29,25 @@ public class HelloController {
     }
     @PostMapping("/groups")
     public String postAllGroups(Model model) {
-        List<AcademicGroup> groups = academicGroupService.getAllAcademicGroups()
+        List<AcademicGroup> groups = academicGroupService.getAllAcademicGroups();
+        System.out.println(groups);
+        groups
                 .stream()
-                .sorted(Comparator.comparing(AcademicGroup::getGroupName))
+                .sorted(Comparator
+                        .comparing(AcademicGroup::getGroupName)
+                        .thenComparing(group -> Integer.parseInt(group.getGroupName().replaceAll("[^0-9]", "")))
+                        .thenComparing(group -> group.getGroupName().contains("і"))
+        .thenComparing(group -> !group.getStudentsList().isEmpty()))
                 .collect(Collectors.toList());
+
+        //sorted(Comparator
+        //                        // Sort first by whether the group has students
+        //                        .comparing(group -> !group.getStudentsList().isEmpty())
+        //                        // Then, sort by numeric value
+        //                        .thenComparing(group -> Integer.parseInt(group.getGroupName().replaceAll("[^0-9]", "")))
+        //                        // Finally, sort by the presence of 'і'
+        //                        .thenComparing(group -> group.getGroupName().contains("і"))
+        //                )
         System.out.println(groups);
         model.addAttribute("groups", groups);
         return "groups"; // Assuming the JSP file is in the "groups" folder inside "views"
