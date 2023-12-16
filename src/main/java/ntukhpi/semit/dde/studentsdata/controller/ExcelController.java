@@ -1,6 +1,7 @@
 package ntukhpi.semit.dde.studentsdata.controller;
 
 import ntukhpi.semit.dde.studentsdata.entity.AcademicGroup;
+import ntukhpi.semit.dde.studentsdata.entity.Student;
 import ntukhpi.semit.dde.studentsdata.files.ExcelUtilities;
 import ntukhpi.semit.dde.studentsdata.service.EmailSender;
 import ntukhpi.semit.dde.studentsdata.service.interf.AcademicGroupService;
@@ -47,6 +48,9 @@ public class ExcelController {
             List<AcademicGroup> groups = ExcelUtilities.readAllGroupsFromExcel(filePath);
             if (groups.size()!=0) {
                 for (AcademicGroup group: groups) {
+                    for (Student stud: group.getStudentsList()) {
+                        System.out.println(stud.getContacts());
+                    }
                     if (academicGroupService.saveAcademicGroup(group)) {
                         System.out.println("AcademicGroup " + group.getGroupName() + " was read from Excel and was saved in DB");
                         System.out.println(group.toStringWithGrouplist());

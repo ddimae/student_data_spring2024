@@ -22,6 +22,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static ntukhpi.semit.dde.studentsdata.utils.Language.EN;
+
 public class ExcelUtilities {
     public static final String STUDENTSDATA_FILES_FOLDER = "students_data/";
 
@@ -111,6 +113,8 @@ public class ExcelUtilities {
                                     groups.add(groupCurrent);
                                 }
                                 groupCurrent = new AcademicGroup(row.getCell(0).getStringCellValue().split("\\s")[0]);
+                                if (groupCurrent.getGroupName().contains(".е") || groupCurrent.getGroupName().contains("і"))
+                                    groupCurrent.setLanguage(EN);
                             }
                             break;
                         case NUMERIC:
